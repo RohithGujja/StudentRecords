@@ -39,7 +39,7 @@ public class Student {
 
 	//@OneToMany(cascade = CascadeType.ALL,targetEntity = Subject.class)
 	//@JoinColumn(name = "student_id")
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "student")
 	@JsonManagedReference
 	private List<Subject> subjects;
 

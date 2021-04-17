@@ -20,15 +20,18 @@ public class SubjectService {
 		return subjectRepository.findById(id).get();
 	}
 	
-	public void deleteSubject(Integer id) {
-		subjectRepository.deleteById(id);
+	public Subject deleteSubject(Integer id) {
+		Subject s = subjectRepository.findById(id).get();
+		if(null != s) {
+			subjectRepository.deleteById(id);
+			System.out.println("Subject Details Deleted: " + id);
+		}else {
+			System.out.println("Subject Details does not exists: " + id);
+		}
+		return s;
 	}
 	
-	public void deleteSubject(Subject subject) {
-		subjectRepository.delete(subject);
-	}
-	
-	public void updateGrade(Integer id, Long grade) {
+	public Subject updateGrade(Integer id, Long grade) {
 		Subject s = subjectRepository.findById(id).get();
 		if(null!=s){
 			s.setGrade(grade);
@@ -38,5 +41,7 @@ public class SubjectService {
 		}else {
 			System.out.println("Subject details not found");
 		}
+		s = subjectRepository.findById(id).get();
+		return s;
 	}
 }

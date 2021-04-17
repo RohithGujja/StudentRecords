@@ -23,15 +23,18 @@ public class StudentService {
 		return studentRepository.findById(id).get();
 	}
 
-	public void deleteStudent(Integer id) {
-		studentRepository.deleteById(id);
+	public Student deleteStudent(Integer id) {
+		Student s =studentRepository.findById(id).get();
+		if(null != s) {
+			studentRepository.deleteById(id);
+			System.out.println("Student Details Deleted: " + id);
+		}else {
+			System.out.println("Student Details does not exists: " + id);
+		}
+		return s;
 	}
 	
-	public void deleteStudent(Student student) {
-		studentRepository.delete(student);
-	}
-	
-	public void addSubject(Integer id, Subject subject) {
+	public Student addSubjectToStudent(Integer id, Subject subject) {
 		Student s =studentRepository.findById(id).get();
 		if(null != s) {
 			List<Subject> ar = s.getSubjects();
@@ -39,9 +42,10 @@ public class StudentService {
 			s.setSubjects(ar);
 			studentRepository.save(s);
 			System.out.println("Student Details Updated");
-			System.out.println(s.toString());
 		}else {
 			System.out.println("Student Not Found");
 		}
+		s = studentRepository.findById(id).get();
+		return s;
 	}
 }
