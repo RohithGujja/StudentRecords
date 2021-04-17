@@ -27,17 +27,17 @@ public class SubjectController {
 		return subjectService.addSubject(subject);
 	}
 	
-	@GetMapping(path = "/getSubject/{student_id}")
+	@GetMapping(path = "/getSubject/{subject_id}")
 	public Subject findStudent(@PathVariable(name = "subject_id") Integer id) {
 		return subjectService.findSubject(id);
 	}
 	
-	@DeleteMapping(path = "/deleteSubject/{student_id}")
+	@DeleteMapping(path = "/deleteSubject/{subject_id}")
 	public Subject deleteStudent(@PathVariable(name = "subject_id") Integer id) {
 		return subjectService.deleteSubject(id);
 	}
 	
-	@PutMapping(path = "/updateSubject/{student_id}/{grade}")
+	@PutMapping(path = "/updateSubject/{subject_id}/{grade}")
 	public Subject updateSubject(@PathVariable(name = "subject_id") Integer id,@PathVariable(name = "grade") Long grade) {
 		return subjectService.updateGrade(id, grade);
 	}

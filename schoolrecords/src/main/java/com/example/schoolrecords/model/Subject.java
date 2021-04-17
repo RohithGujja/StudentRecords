@@ -28,7 +28,7 @@ public class Subject {
 	@Positive(message = "Grade should be Positive")
 	private Long grade;
 	
-	@ManyToOne(fetch = FetchType.EAGER,optional = false)
+	@ManyToOne(fetch = FetchType.LAZY,optional = false)
 	@JoinColumn(name = "student_id",nullable = false)
 	@JsonBackReference
 	private Student student;

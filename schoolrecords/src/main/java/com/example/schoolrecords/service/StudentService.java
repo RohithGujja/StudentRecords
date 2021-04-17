@@ -1,6 +1,7 @@
 package com.example.schoolrecords.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,28 +25,30 @@ public class StudentService {
 	}
 
 	public Student deleteStudent(Integer id) {
-		Student s =studentRepository.findById(id).get();
-		if(null != s) {
+		Optional<Student> s =studentRepository.findById(id);
+		Student student = s.isPresent() ? s.get() : new Student();
+		if(s.isPresent()) {
 			studentRepository.deleteById(id);
 			System.out.println("Student Details Deleted: " + id);
 		}else {
 			System.out.println("Student Details does not exists: " + id);
 		}
-		return s;
+		return student;
 	}
 	
 	public Student addSubjectToStudent(Integer id, Subject subject) {
-		Student s =studentRepository.findById(id).get();
-		if(null != s) {
-			List<Subject> ar = s.getSubjects();
+		Optional<Student> s =studentRepository.findById(id);
+		Student student = s.isPresent() ? s.get() : new Student();
+		if(s.isPresent()) {
+			List<Subject> ar = student.getSubjects();
 			ar.add(subject);
-			s.setSubjects(ar);
-			studentRepository.save(s);
+			student.setSubjects(ar);
+			studentRepository.save(student);
+			student = studentRepository.findById(id).get();
 			System.out.println("Student Details Updated");
 		}else {
 			System.out.println("Student Not Found");
 		}
-		s = studentRepository.findById(id).get();
-		return s;
+		return student;
 	}
 }

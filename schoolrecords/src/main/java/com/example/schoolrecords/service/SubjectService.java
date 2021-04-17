@@ -1,5 +1,7 @@
 package com.example.schoolrecords.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,27 +23,27 @@ public class SubjectService {
 	}
 	
 	public Subject deleteSubject(Integer id) {
-		Subject s = subjectRepository.findById(id).get();
-		if(null != s) {
+		Optional<Subject> s = subjectRepository.findById(id);
+		Subject subject = s.isPresent() ? s.get() : new Subject();
+		if(s.isPresent()) {
 			subjectRepository.deleteById(id);
 			System.out.println("Subject Details Deleted: " + id);
 		}else {
 			System.out.println("Subject Details does not exists: " + id);
 		}
-		return s;
+		return subject;
 	}
 	
 	public Subject updateGrade(Integer id, Long grade) {
-		Subject s = subjectRepository.findById(id).get();
-		if(null!=s){
-			s.setGrade(grade);
-			subjectRepository.save(s);
+		Optional<Subject> s = subjectRepository.findById(id);
+		Subject subject = s.isPresent() ? s.get() : new Subject();;
+		if(s.isPresent()) {
+			subject.setGrade(grade);
+			subjectRepository.save(subject);
 			System.out.println("Subject Details updated");
-			System.out.println(s.toString());
 		}else {
 			System.out.println("Subject details not found");
 		}
-		s = subjectRepository.findById(id).get();
-		return s;
+		return subject;
 	}
 }
